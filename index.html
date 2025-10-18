@@ -81,6 +81,23 @@
       margin-top: 20px;
     }
 
+    button {
+      background: #00d8ff;
+      color: #0a0f1c;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      display: block;
+      margin: 25px auto;
+    }
+
+    button:hover {
+      background: #17e0ff;
+    }
+
     footer {
       margin-top: auto;
       padding: 20px;
@@ -97,6 +114,8 @@
   </header>
 
   <main id="quiz"></main>
+
+  <button id="showResultsBtn" onclick="checkAnswers()">Показать результаты</button>
 
   <div id="result"></div>
 
@@ -131,7 +150,6 @@
       { question: "Режим CBC использует:", options: ["Обратную связь по шифртексту", "Обратную связь по ключу", "Хэширование", "Подстановки"], correct: 0 }
     ];
 
-    // создаём до 50 вопросов (повтор)
     while (quizData.length < 50) {
       const copy = JSON.parse(JSON.stringify(quizData[quizData.length % 25]));
       quizData.push(copy);
@@ -148,12 +166,11 @@
     const quizContainer = document.getElementById("quiz");
 
     quizData.forEach((q, index) => {
-      // создаём пары {text, isCorrect}
       const opts = q.options.map((text, i) => ({
         text,
         isCorrect: i === q.correct
       }));
-      shuffleArray(opts); // перемешиваем
+      shuffleArray(opts);
       q.options = opts.map(o => o.text);
       q.correct = opts.findIndex(o => o.isCorrect);
 
@@ -175,17 +192,15 @@
       quizContainer.appendChild(div);
     });
 
-    const allRadios = document.querySelectorAll('input[type="radio"]');
-    allRadios.forEach(r => r.addEventListener('change', checkIfFinished));
-
-    function checkIfFinished() {
+    function checkAnswers() {
       const allAnswered = quizData.every((_, i) =>
         document.querySelector(`input[name="q${i}"]:checked`)
       );
-      if (allAnswered) checkAnswers();
-    }
+      if (!allAnswered) {
+        alert("Пожалуйста, ответьте на все вопросы перед проверкой!");
+        return;
+      }
 
-    function checkAnswers() {
       let score = 0;
       const questions = document.querySelectorAll(".question");
 
@@ -203,10 +218,10 @@
         }
       });
 
+      document.getElementById("showResultsBtn").disabled = true;
       document.getElementById("result").innerHTML =
         `✅ Правильных ответов: ${score} из ${quizData.length}`;
     }
   </script>
 </body>
 </html>
-
