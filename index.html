@@ -104,35 +104,26 @@
 
   <script>
     const quizData = [
-      // --- Криптография ---
       { question: "Что такое криптография?", options: ["Наука о шифровании информации", "Язык программирования", "Метод взлома", "Сеть передачи данных"], correct: 0 },
       { question: "Цель криптографии —", options: ["Обеспечить конфиденциальность и целостность данных", "Удалить ненужные файлы", "Создать вирус", "Повысить скорость сети"], correct: 0 },
       { question: "Что делает шифрование?", options: ["Преобразует данные для защиты", "Проверяет пароли", "Удаляет данные", "Создает резервную копию"], correct: 0 },
       { question: "Что означает термин 'ключ' в криптографии?", options: ["Секретное значение для шифрования/дешифрования", "Пароль пользователя", "Адрес сервера", "Имя файла"], correct: 0 },
       { question: "Симметричное шифрование использует:", options: ["Один ключ для шифрования и расшифровки", "Разные ключи", "Без ключей", "Несколько паролей"], correct: 0 },
-
-      // --- DES/AES ---
       { question: "Что означает AES?", options: ["Advanced Encryption Standard", "Algorithm Encryption Set", "Automatic Encoding System", "Advanced Encoding Service"], correct: 0 },
       { question: "AES использует блок:", options: ["128 бит", "64 бита", "192 бита", "256 бит"], correct: 0 },
       { question: "Почему DES считается небезопасным?", options: ["Короткий ключ 56 бит", "Медленный", "Не имеет режимов", "Не совместим с Linux"], correct: 0 },
       { question: "Какой алгоритм заменил DES?", options: ["AES", "RSA", "SHA-1", "MD5"], correct: 0 },
       { question: "DES расшифровывается как:", options: ["Data Encryption Standard", "Digital Encoding System", "Dynamic Encryption Service", "Data Encoding Set"], correct: 0 },
-
-      // --- RSA ---
       { question: "RSA — это:", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Протокол"], correct: 0 },
       { question: "Безопасность RSA основана на:", options: ["Сложности факторизации больших чисел", "Проверке CRC", "Делении", "Сложении"], correct: 0 },
       { question: "Открытый ключ RSA используется для:", options: ["Шифрования данных", "Удаления файлов", "Хэширования", "Проверки пароля"], correct: 0 },
       { question: "Закрытый ключ RSA используется для:", options: ["Расшифровки данных", "Удаления", "Подписи электронных писем", "Хэширования"], correct: 0 },
       { question: "Безопасная длина ключа RSA:", options: ["2048 бит и более", "128 бит", "512 бит", "64 бита"], correct: 0 },
-
-      // --- ElGamal ---
       { question: "ElGamal — это:", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Метод кодирования"], correct: 0 },
       { question: "На чём основана безопасность ElGamal?", options: ["Задача дискретного логарифмирования", "Перестановки", "Факторизация", "CRC"], correct: 0 },
       { question: "ElGamal используется для:", options: ["Шифрования и цифровой подписи", "Проверки пароля", "Сжатия данных", "Хэширования"], correct: 0 },
       { question: "ElGamal является:", options: ["Стохастическим (разные шифротексты при одинаковом сообщении)", "Детерминированным", "Одноразовым", "Безключевым"], correct: 0 },
       { question: "ElGamal работает в:", options: ["Модульной арифметике", "Двоичной системе", "ASCII коде", "UTF-8"], correct: 0 },
-
-      // --- Блочное и поточное шифрование ---
       { question: "Блочные шифры работают:", options: ["С блоками фиксированной длины", "С отдельными битами", "С текстом целиком", "С хэшами"], correct: 0 },
       { question: "Поточные шифры работают:", options: ["Побитово или побайтно", "Сразу с блоками", "С файлами", "С сетями"], correct: 0 },
       { question: "Пример поточного шифра:", options: ["RC4", "AES", "RSA", "SHA-1"], correct: 0 },
@@ -140,43 +131,46 @@
       { question: "Режим CBC использует:", options: ["Обратную связь по шифртексту", "Обратную связь по ключу", "Хэширование", "Подстановки"], correct: 0 }
     ];
 
-    // Дублируем до 50
+    // создаём до 50 вопросов (повтор)
     while (quizData.length < 50) {
-      const base = quizData[quizData.length % 25];
-      quizData.push({
-        question: base.question,
-        options: [...base.options],
-        correct: base.correct,
-      });
+      const copy = JSON.parse(JSON.stringify(quizData[quizData.length % 25]));
+      quizData.push(copy);
     }
 
-    // Перемешивание массива
-    function shuffleArray(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+        [array[i], array[j]] = [array[j], array[i]];
       }
-      return arr;
+      return array;
     }
 
     const quizContainer = document.getElementById("quiz");
 
     quizData.forEach((q, index) => {
-      const options = q.options.map((opt, i) => ({ opt, i }));
-      shuffleArray(options); // перемешиваем варианты
-      const correctIndex = options.findIndex(o => o.i === q.correct);
-      q.correct = correctIndex; // обновляем индекс правильного ответа
+      // создаём пары {text, isCorrect}
+      const opts = q.options.map((text, i) => ({
+        text,
+        isCorrect: i === q.correct
+      }));
+      shuffleArray(opts); // перемешиваем
+      q.options = opts.map(o => o.text);
+      q.correct = opts.findIndex(o => o.isCorrect);
 
       const div = document.createElement("div");
       div.classList.add("question");
       div.innerHTML = `
         <p>${index + 1}. ${q.question}</p>
-        ${options.map((o, i) => `
+        ${opts
+          .map(
+            (o, i) => `
           <label>
             <input type="radio" name="q${index}" value="${i}">
-            <span>${o.opt}</span>
+            <span>${o.text}</span>
           </label>
-        `).join("")}
+        `
+          )
+          .join("")}
       `;
       quizContainer.appendChild(div);
     });
@@ -215,3 +209,4 @@
   </script>
 </body>
 </html>
+
