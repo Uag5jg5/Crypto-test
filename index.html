@@ -40,13 +40,14 @@
 
     .question p {
       color: #00d8ff;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
     }
 
     label {
       display: block;
       background: #1c2439;
-      margin: 6px 0;
+      margin: 5px 0;
       padding: 8px 12px;
       border-radius: 8px;
       cursor: pointer;
@@ -57,33 +58,20 @@
       background: #24304f;
     }
 
-    .correct {
-      background-color: rgba(0, 255, 100, 0.25) !important;
+    input[type="radio"]:disabled + span {
+      cursor: not-allowed;
     }
 
-    .wrong {
-      background-color: rgba(255, 80, 80, 0.25) !important;
+    .correct {
+      background-color: rgba(0, 255, 100, 0.25) !important;
     }
 
     .correct::after {
       content: " ✅";
     }
 
-    button {
-      background: #00d8ff;
-      color: #0a0f1c;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s;
-      margin: 20px auto;
-      display: block;
-    }
-
-    button:hover {
-      background: #17e0ff;
+    .wrong {
+      background-color: rgba(255, 80, 80, 0.25) !important;
     }
 
     #result {
@@ -110,109 +98,120 @@
 
   <main id="quiz"></main>
 
-  <button onclick="checkAnswers()">Проверить ответы</button>
-
   <div id="result"></div>
 
   <footer>© 2025 CryptoQuiz — Сделано для обучения</footer>
 
   <script>
     const quizData = [
-      // === Криптография ===
-      { question: "1. Что такое криптография?", options: ["Наука о шифровании информации", "Вид хакерской атаки", "Язык программирования", "Алгоритм сортировки"], correct: 0 },
-      { question: "2. Что является целью криптографии?", options: ["Защита данных", "Удаление данных", "Хранение паролей", "Передача файлов"], correct: 0 },
-      { question: "3. Что делает шифрование?", options: ["Скрывает смысл информации", "Удаляет файл", "Проверяет целостность", "Создаёт архив"], correct: 0 },
-      { question: "4. Какой тип криптографии использует один ключ?", options: ["Симметричная", "Асимметричная", "Хэширование", "Квантовая"], correct: 0 },
-      { question: "5. Что означает 'асимметричное шифрование'?", options: ["Использует пару ключей", "Использует один ключ", "Не использует ключи", "Использует пароли"], correct: 0 },
+      // --- Криптография ---
+      { question: "Что такое криптография?", options: ["Наука о шифровании информации", "Язык программирования", "Метод взлома", "Сеть передачи данных"], correct: 0 },
+      { question: "Цель криптографии —", options: ["Обеспечить конфиденциальность и целостность данных", "Удалить ненужные файлы", "Создать вирус", "Повысить скорость сети"], correct: 0 },
+      { question: "Что делает шифрование?", options: ["Преобразует данные для защиты", "Проверяет пароли", "Удаляет данные", "Создает резервную копию"], correct: 0 },
+      { question: "Что означает термин 'ключ' в криптографии?", options: ["Секретное значение для шифрования/дешифрования", "Пароль пользователя", "Адрес сервера", "Имя файла"], correct: 0 },
+      { question: "Симметричное шифрование использует:", options: ["Один ключ для шифрования и расшифровки", "Разные ключи", "Без ключей", "Несколько паролей"], correct: 0 },
 
-      // === DES / AES ===
-      { question: "6. Что означает AES?", options: ["Advanced Encryption Standard", "Automatic Encryption System", "Active Encoding Set", "Algorithmic Encryption Scheme"], correct: 0 },
-      { question: "7. Какой размер блока в AES?", options: ["64 бита", "128 бит", "256 бит", "512 бит"], correct: 1 },
-      { question: "8. DES использует блок:", options: ["64 бита", "128 бит", "32 бита", "256 бит"], correct: 0 },
-      { question: "9. Почему DES устарел?", options: ["Короткий ключ (56 бит)", "Медленный", "Слишком сложный", "Не поддерживает сети"], correct: 0 },
-      { question: "10. Что заменило DES?", options: ["AES", "RSA", "MD5", "SHA-1"], correct: 0 },
+      // --- DES/AES ---
+      { question: "Что означает AES?", options: ["Advanced Encryption Standard", "Algorithm Encryption Set", "Automatic Encoding System", "Advanced Encoding Service"], correct: 0 },
+      { question: "AES использует блок:", options: ["128 бит", "64 бита", "192 бита", "256 бит"], correct: 0 },
+      { question: "Почему DES считается небезопасным?", options: ["Короткий ключ 56 бит", "Медленный", "Не имеет режимов", "Не совместим с Linux"], correct: 0 },
+      { question: "Какой алгоритм заменил DES?", options: ["AES", "RSA", "SHA-1", "MD5"], correct: 0 },
+      { question: "DES расшифровывается как:", options: ["Data Encryption Standard", "Digital Encoding System", "Dynamic Encryption Service", "Data Encoding Set"], correct: 0 },
 
-      // === RSA ===
-      { question: "11. Что такое RSA?", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Потоковый шифр"], correct: 0 },
-      { question: "12. Безопасность RSA основана на:", options: ["Факторизации больших чисел", "XOR операции", "Сложности перестановок", "Проверке CRC"], correct: 0 },
-      { question: "13. Что делает открытый ключ RSA?", options: ["Шифрует данные", "Удаляет файлы", "Хэширует", "Расшифровывает"], correct: 0 },
-      { question: "14. Что делает закрытый ключ RSA?", options: ["Дешифрует данные", "Удаляет", "Компрессирует", "Передаёт ключ"], correct: 0 },
-      { question: "15. Какая длина ключа безопасна?", options: ["2048 бит и больше", "512 бит", "128 бит", "64 бита"], correct: 0 },
+      // --- RSA ---
+      { question: "RSA — это:", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Протокол"], correct: 0 },
+      { question: "Безопасность RSA основана на:", options: ["Сложности факторизации больших чисел", "Проверке CRC", "Делении", "Сложении"], correct: 0 },
+      { question: "Открытый ключ RSA используется для:", options: ["Шифрования данных", "Удаления файлов", "Хэширования", "Проверки пароля"], correct: 0 },
+      { question: "Закрытый ключ RSA используется для:", options: ["Расшифровки данных", "Удаления", "Подписи электронных писем", "Хэширования"], correct: 0 },
+      { question: "Безопасная длина ключа RSA:", options: ["2048 бит и более", "128 бит", "512 бит", "64 бита"], correct: 0 },
 
-      // === ElGamal ===
-      { question: "16. ElGamal — это:", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Протокол"], correct: 0 },
-      { question: "17. На чём основан ElGamal?", options: ["Задача дискретного логарифмирования", "Умножение", "XOR", "Хэширование"], correct: 0 },
-      { question: "18. Что используется для шифрования?", options: ["Открытый ключ", "Закрытый ключ", "Хэш", "Случайный вектор"], correct: 0 },
-      { question: "19. Что используется для расшифровки?", options: ["Закрытый ключ", "Открытый ключ", "Хэш", "Пароль"], correct: 0 },
-      { question: "20. Особенность ElGamal?", options: ["Стохастический — одно сообщение шифруется по-разному", "Детерминированный", "Сжатие данных", "Дешифрование без ключа"], correct: 0 },
+      // --- ElGamal ---
+      { question: "ElGamal — это:", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Метод кодирования"], correct: 0 },
+      { question: "На чём основана безопасность ElGamal?", options: ["Задача дискретного логарифмирования", "Перестановки", "Факторизация", "CRC"], correct: 0 },
+      { question: "ElGamal используется для:", options: ["Шифрования и цифровой подписи", "Проверки пароля", "Сжатия данных", "Хэширования"], correct: 0 },
+      { question: "ElGamal является:", options: ["Стохастическим (разные шифротексты при одинаковом сообщении)", "Детерминированным", "Одноразовым", "Безключевым"], correct: 0 },
+      { question: "ElGamal работает в:", options: ["Модульной арифметике", "Двоичной системе", "ASCII коде", "UTF-8"], correct: 0 },
 
-      // === Блочное и поточное шифрование ===
-      { question: "21. Что делает блочный шифр?", options: ["Шифрует данные по блокам", "По битам", "По строкам", "По символам"], correct: 0 },
-      { question: "22. Поточный шифр работает:", options: ["Побитово или побайтно", "Сразу с блоками", "С файлами", "С архивами"], correct: 0 },
-      { question: "23. Пример поточного шифра:", options: ["RC4", "AES", "RSA", "DES"], correct: 0 },
-      { question: "24. Пример блочного шифра:", options: ["AES", "RC4", "SHA-1", "MD5"], correct: 0 },
-      { question: "25. Какой режим использует обратную связь по шифртексту?", options: ["CBC", "ECB", "OFB", "CTR"], correct: 0 },
+      // --- Блочное и поточное шифрование ---
+      { question: "Блочные шифры работают:", options: ["С блоками фиксированной длины", "С отдельными битами", "С текстом целиком", "С хэшами"], correct: 0 },
+      { question: "Поточные шифры работают:", options: ["Побитово или побайтно", "Сразу с блоками", "С файлами", "С сетями"], correct: 0 },
+      { question: "Пример поточного шифра:", options: ["RC4", "AES", "RSA", "SHA-1"], correct: 0 },
+      { question: "Пример блочного шифра:", options: ["AES", "RC4", "MD5", "SHA-256"], correct: 0 },
+      { question: "Режим CBC использует:", options: ["Обратную связь по шифртексту", "Обратную связь по ключу", "Хэширование", "Подстановки"], correct: 0 }
     ];
 
-    // дублируем до 50
+    // Дублируем до 50
     while (quizData.length < 50) {
       const base = quizData[quizData.length % 25];
       quizData.push({
-        question: `${quizData.length + 1}. ${base.question.split('. ')[1]}`,
+        question: base.question,
         options: [...base.options],
         correct: base.correct,
       });
     }
 
+    // Перемешивание массива
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
     const quizContainer = document.getElementById("quiz");
 
     quizData.forEach((q, index) => {
+      const options = q.options.map((opt, i) => ({ opt, i }));
+      shuffleArray(options); // перемешиваем варианты
+      const correctIndex = options.findIndex(o => o.i === q.correct);
+      q.correct = correctIndex; // обновляем индекс правильного ответа
+
       const div = document.createElement("div");
       div.classList.add("question");
       div.innerHTML = `
-        <p>${q.question}</p>
-        ${q.options
-          .map(
-            (opt, i) =>
-              `<label><input type="radio" name="q${index}" value="${i}"> ${opt}</label>`
-          )
-          .join("")}
+        <p>${index + 1}. ${q.question}</p>
+        ${options.map((o, i) => `
+          <label>
+            <input type="radio" name="q${index}" value="${i}">
+            <span>${o.opt}</span>
+          </label>
+        `).join("")}
       `;
       quizContainer.appendChild(div);
     });
 
+    const allRadios = document.querySelectorAll('input[type="radio"]');
+    allRadios.forEach(r => r.addEventListener('change', checkIfFinished));
+
+    function checkIfFinished() {
+      const allAnswered = quizData.every((_, i) =>
+        document.querySelector(`input[name="q${i}"]:checked`)
+      );
+      if (allAnswered) checkAnswers();
+    }
+
     function checkAnswers() {
       let score = 0;
       const questions = document.querySelectorAll(".question");
-      quizData.forEach((q, index) => {
-        const selected = document.querySelector(`input[name="q${index}"]:checked`);
-        const labels = questions[index].querySelectorAll("label");
 
-        labels.forEach((label, i) => {
-          label.classList.remove("correct", "wrong");
+      quizData.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const labels = questions[i].querySelectorAll("label");
+        labels.forEach((label, j) => {
           const input = label.querySelector("input");
-          input.disabled = true; // блокируем выбор после проверки
-
-          if (i === q.correct) {
-            label.classList.add("correct");
-          }
+          input.disabled = true;
+          if (j === q.correct) label.classList.add("correct");
         });
-
         if (selected) {
-          if (parseInt(selected.value) === q.correct) {
-            score++;
-          } else {
-            labels[parseInt(selected.value)].classList.add("wrong");
-          }
+          if (parseInt(selected.value) === q.correct) score++;
+          else labels[parseInt(selected.value)].classList.add("wrong");
         }
       });
 
-      const result = document.getElementById("result");
-      result.innerHTML = `✅ Вы ответили правильно на ${score} из ${quizData.length} вопросов.`;
-      result.style.color = score >= 25 ? "#00ff99" : "#ff5555";
-      document.querySelector("button").disabled = true; // запрещаем повторное нажатие
+      document.getElementById("result").innerHTML =
+        `✅ Правильных ответов: ${score} из ${quizData.length}`;
     }
   </script>
 </body>
 </html>
-
