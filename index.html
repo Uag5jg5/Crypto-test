@@ -58,11 +58,11 @@
     }
 
     .correct {
-      background-color: rgba(0, 255, 100, 0.2) !important;
+      background-color: rgba(0, 255, 100, 0.25) !important;
     }
 
     .wrong {
-      background-color: rgba(255, 80, 80, 0.2) !important;
+      background-color: rgba(255, 80, 80, 0.25) !important;
     }
 
     .correct::after {
@@ -104,7 +104,7 @@
 </head>
 <body>
   <header>
-    <h1>🧠 Crypto Quiz — 50 вопросов</h1>
+    <h1>Crypto Quiz — 50 вопросов</h1>
     <p>Темы: Криптография, DES/AES, RSA, ElGamal, Блочное и поточное шифрование</p>
   </header>
 
@@ -119,44 +119,49 @@
   <script>
     const quizData = [
       // === Криптография ===
-      { question: "1️⃣ Что такое криптография?", options: ["Наука о шифровании информации", "Вид хакерской атаки", "Язык программирования", "Алгоритм сортировки"], correct: 0 },
-      { question: "2️⃣ Что является целью криптографии?", options: ["Защита данных", "Удаление данных", "Хранение паролей", "Передача файлов"], correct: 0 },
-      { question: "3️⃣ Что делает шифрование?", options: ["Скрывает смысл информации", "Удаляет файл", "Проверяет целостность", "Создаёт архив"], correct: 0 },
-      { question: "4️⃣ Какой тип криптографии использует один ключ?", options: ["Симметричная", "Асимметричная", "Хэширование", "Квантовая"], correct: 0 },
-      { question: "5️⃣ Что означает 'асимметричное шифрование'?", options: ["Использует пару ключей", "Использует один ключ", "Не использует ключи", "Использует пароли"], correct: 0 },
+      { question: "1. Что такое криптография?", options: ["Наука о шифровании информации", "Вид хакерской атаки", "Язык программирования", "Алгоритм сортировки"], correct: 0 },
+      { question: "2. Что является целью криптографии?", options: ["Защита данных", "Удаление данных", "Хранение паролей", "Передача файлов"], correct: 0 },
+      { question: "3. Что делает шифрование?", options: ["Скрывает смысл информации", "Удаляет файл", "Проверяет целостность", "Создаёт архив"], correct: 0 },
+      { question: "4. Какой тип криптографии использует один ключ?", options: ["Симметричная", "Асимметричная", "Хэширование", "Квантовая"], correct: 0 },
+      { question: "5. Что означает 'асимметричное шифрование'?", options: ["Использует пару ключей", "Использует один ключ", "Не использует ключи", "Использует пароли"], correct: 0 },
 
       // === DES / AES ===
-      { question: "6️⃣ Что означает AES?", options: ["Advanced Encryption Standard", "Automatic Encryption System", "Active Encoding Set", "Algorithmic Encryption Scheme"], correct: 0 },
-      { question: "7️⃣ Какой размер блока в AES?", options: ["64 бита", "128 бит", "256 бит", "512 бит"], correct: 1 },
-      { question: "8️⃣ DES использует блок:", options: ["64 бита", "128 бит", "32 бита", "256 бит"], correct: 0 },
-      { question: "9️⃣ Почему DES устарел?", options: ["Короткий ключ (56 бит)", "Медленный", "Слишком сложный", "Не поддерживает сети"], correct: 0 },
-      { question: "🔟 Что заменило DES?", options: ["AES", "RSA", "MD5", "SHA-1"], correct: 0 },
+      { question: "6. Что означает AES?", options: ["Advanced Encryption Standard", "Automatic Encryption System", "Active Encoding Set", "Algorithmic Encryption Scheme"], correct: 0 },
+      { question: "7. Какой размер блока в AES?", options: ["64 бита", "128 бит", "256 бит", "512 бит"], correct: 1 },
+      { question: "8. DES использует блок:", options: ["64 бита", "128 бит", "32 бита", "256 бит"], correct: 0 },
+      { question: "9. Почему DES устарел?", options: ["Короткий ключ (56 бит)", "Медленный", "Слишком сложный", "Не поддерживает сети"], correct: 0 },
+      { question: "10. Что заменило DES?", options: ["AES", "RSA", "MD5", "SHA-1"], correct: 0 },
 
       // === RSA ===
-      { question: "11️⃣ Что такое RSA?", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Потоковый шифр"], correct: 0 },
-      { question: "12️⃣ Безопасность RSA основана на:", options: ["Факторизации больших чисел", "XOR операции", "Сложности перестановок", "Проверке CRC"], correct: 0 },
-      { question: "13️⃣ Что делает открытый ключ RSA?", options: ["Шифрует данные", "Удаляет файлы", "Хэширует", "Расшифровывает"], correct: 0 },
-      { question: "14️⃣ Что делает закрытый ключ RSA?", options: ["Дешифрует данные", "Удаляет", "Компрессирует", "Передаёт ключ"], correct: 0 },
-      { question: "15️⃣ Какая длина ключа безопасна?", options: ["2048 бит и больше", "512 бит", "128 бит", "64 бита"], correct: 0 },
+      { question: "11. Что такое RSA?", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Потоковый шифр"], correct: 0 },
+      { question: "12. Безопасность RSA основана на:", options: ["Факторизации больших чисел", "XOR операции", "Сложности перестановок", "Проверке CRC"], correct: 0 },
+      { question: "13. Что делает открытый ключ RSA?", options: ["Шифрует данные", "Удаляет файлы", "Хэширует", "Расшифровывает"], correct: 0 },
+      { question: "14. Что делает закрытый ключ RSA?", options: ["Дешифрует данные", "Удаляет", "Компрессирует", "Передаёт ключ"], correct: 0 },
+      { question: "15. Какая длина ключа безопасна?", options: ["2048 бит и больше", "512 бит", "128 бит", "64 бита"], correct: 0 },
 
       // === ElGamal ===
-      { question: "16️⃣ ElGamal — это:", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Протокол"], correct: 0 },
-      { question: "17️⃣ На чём основан ElGamal?", options: ["Задача дискретного логарифмирования", "Умножение", "XOR", "Хэширование"], correct: 0 },
-      { question: "18️⃣ Что используется для шифрования?", options: ["Открытый ключ", "Закрытый ключ", "Хэш", "Случайный вектор"], correct: 0 },
-      { question: "19️⃣ Что используется для расшифровки?", options: ["Закрытый ключ", "Открытый ключ", "Хэш", "Пароль"], correct: 0 },
-      { question: "20️⃣ Особенность ElGamal?", options: ["Стохастический — одно сообщение шифруется по-разному", "Детерминированный", "Сжатие данных", "Дешифрование без ключа"], correct: 0 },
+      { question: "16. ElGamal — это:", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Протокол"], correct: 0 },
+      { question: "17. На чём основан ElGamal?", options: ["Задача дискретного логарифмирования", "Умножение", "XOR", "Хэширование"], correct: 0 },
+      { question: "18. Что используется для шифрования?", options: ["Открытый ключ", "Закрытый ключ", "Хэш", "Случайный вектор"], correct: 0 },
+      { question: "19. Что используется для расшифровки?", options: ["Закрытый ключ", "Открытый ключ", "Хэш", "Пароль"], correct: 0 },
+      { question: "20. Особенность ElGamal?", options: ["Стохастический — одно сообщение шифруется по-разному", "Детерминированный", "Сжатие данных", "Дешифрование без ключа"], correct: 0 },
 
       // === Блочное и поточное шифрование ===
-      { question: "21️⃣ Что делает блочный шифр?", options: ["Шифрует данные по блокам", "По битам", "По строкам", "По символам"], correct: 0 },
-      { question: "22️⃣ Поточный шифр работает:", options: ["Побитово или побайтно", "Сразу с блоками", "С файлами", "С архивами"], correct: 0 },
-      { question: "23️⃣ Пример поточного шифра:", options: ["RC4", "AES", "RSA", "DES"], correct: 0 },
-      { question: "24️⃣ Пример блочного шифра:", options: ["AES", "RC4", "SHA-1", "MD5"], correct: 0 },
-      { question: "25️⃣ Какой режим использует обратную связь по шифртексту?", options: ["CBC", "ECB", "OFB", "CTR"], correct: 0 },
+      { question: "21. Что делает блочный шифр?", options: ["Шифрует данные по блокам", "По битам", "По строкам", "По символам"], correct: 0 },
+      { question: "22. Поточный шифр работает:", options: ["Побитово или побайтно", "Сразу с блоками", "С файлами", "С архивами"], correct: 0 },
+      { question: "23. Пример поточного шифра:", options: ["RC4", "AES", "RSA", "DES"], correct: 0 },
+      { question: "24. Пример блочного шифра:", options: ["AES", "RC4", "SHA-1", "MD5"], correct: 0 },
+      { question: "25. Какой режим использует обратную связь по шифртексту?", options: ["CBC", "ECB", "OFB", "CTR"], correct: 0 },
     ];
 
     // дублируем до 50
     while (quizData.length < 50) {
-      quizData.push({ ...quizData[quizData.length % 25] });
+      const base = quizData[quizData.length % 25];
+      quizData.push({
+        question: `${quizData.length + 1}. ${base.question.split('. ')[1]}`,
+        options: [...base.options],
+        correct: base.correct,
+      });
     }
 
     const quizContainer = document.getElementById("quiz");
@@ -185,21 +190,27 @@
 
         labels.forEach((label, i) => {
           label.classList.remove("correct", "wrong");
+          const input = label.querySelector("input");
+          input.disabled = true; // блокируем выбор после проверки
+
           if (i === q.correct) {
-            label.classList.add("correct"); // показываем ✅ у правильного варианта
+            label.classList.add("correct");
           }
         });
 
-        if (selected && parseInt(selected.value) === q.correct) {
-          score++;
-        } else if (selected) {
-          labels[parseInt(selected.value)].classList.add("wrong");
+        if (selected) {
+          if (parseInt(selected.value) === q.correct) {
+            score++;
+          } else {
+            labels[parseInt(selected.value)].classList.add("wrong");
+          }
         }
       });
 
       const result = document.getElementById("result");
       result.innerHTML = `✅ Вы ответили правильно на ${score} из ${quizData.length} вопросов.`;
       result.style.color = score >= 25 ? "#00ff99" : "#ff5555";
+      document.querySelector("button").disabled = true; // запрещаем повторное нажатие
     }
   </script>
 </body>
