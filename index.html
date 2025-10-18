@@ -1,245 +1,206 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crypto Quiz — 50 вопросов</title>
   <style>
-    :root{
-      --bg:#071021; --card:#0f1724; --accent:#12b7ff; --muted:#9aa7b2;
-      --good:#0b6b3a; --bad:#8b1f1f; --hint:#1f2a3b;
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #0a0f1c;
+      color: #e5e5e5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
-    body{
-      margin:0; font-family:Inter, "Segoe UI", Arial, sans-serif;
-      background:linear-gradient(180deg,var(--bg),#03121a 120%);
-      color:#e6eef3; padding:28px; display:flex; flex-direction:column; align-items:center;
+
+    header {
+      text-align: center;
+      padding: 30px 0;
+      color: #00d8ff;
     }
-    .wrap{width:100%; max-width:980px;}
-    header{ text-align:center; margin-bottom:18px;}
-    header h1{margin:0;color:var(--accent);font-size:1.6rem;}
-    header p{margin:6px 0 0; color:var(--muted);}
 
-    .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:18px 0;}
-    button{background:var(--accent);color:#02121a;border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
-    .secondary{background:transparent;color:var(--accent);border:1px solid rgba(18,183,255,0.12)}
-    .danger{background:#ff6b6b;color:#071021}
+    main {
+      width: 90%;
+      max-width: 800px;
+      background: #141a2b;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 216, 255, 0.2);
+    }
 
-    .card{background:var(--card); padding:18px;border-radius:12px; box-shadow:0 8px 30px rgba(2,8,15,0.6); margin-bottom:14px;}
-    h2.topic{margin:0 0 12px;color:#a8f0ff;font-size:1.05rem}
-    .question{padding:12px;border-radius:10px;margin-bottom:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);}
-    .qtext{color:var(--accent);margin:0 0 8px;font-weight:600}
-    label.opt{display:block;padding:8px 10px;border-radius:8px;cursor:pointer;background:#0d1420;margin:6px 0;border:1px solid rgba(255,255,255,0.03)}
-    label.opt:hover{background:#121826}
-    label.opt input{margin-right:10px}
-    label.opt.correct{background:linear-gradient(90deg, rgba(0,255,153,0.06), rgba(0,255,153,0.03)); border:1px solid rgba(0,255,153,0.18);}
-    label.opt.incorrect{background:linear-gradient(90deg, rgba(255,85,85,0.06), rgba(255,85,85,0.03)); border:1px solid rgba(255,85,85,0.18);}
-    label.opt.show-correct{outline:2px dashed rgba(0,255,153,0.18)}
-    #result{margin-top:12px;text-align:center;font-size:1.1rem;font-weight:700}
-    .note{color:var(--muted);font-size:0.9rem;text-align:center;margin-top:8px}
-    footer{margin-top:20px;color:var(--muted);font-size:0.85rem;text-align:center}
-    @media (max-width:600px){
-      .controls{flex-direction:column}
-      button{width:100%}
+    .question {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #2a3550;
+    }
+
+    .question p {
+      color: #00d8ff;
+      font-size: 1.1rem;
+    }
+
+    label {
+      display: block;
+      background: #1c2439;
+      margin: 6px 0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    label:hover {
+      background: #24304f;
+    }
+
+    .correct {
+      background-color: rgba(0, 255, 100, 0.2) !important;
+    }
+
+    .wrong {
+      background-color: rgba(255, 80, 80, 0.2) !important;
+    }
+
+    .correct::after {
+      content: " ✅";
+    }
+
+    button {
+      background: #00d8ff;
+      color: #0a0f1c;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      margin: 20px auto;
+      display: block;
+    }
+
+    button:hover {
+      background: #17e0ff;
+    }
+
+    #result {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 20px;
+      text-align: center;
+      color: #777;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>Crypto Quiz — 50 вопросов</h1>
-      <p>Темы: Криптография, DES/AES, RSA, ElGamal, Блочное и поточное шифрование</p>
-    </header>
+  <header>
+    <h1>🧠 Crypto Quiz — 50 вопросов</h1>
+    <p>Темы: Криптография, DES/AES, RSA, ElGamal, Блочное и поточное шифрование</p>
+  </header>
 
-    <div class="controls">
-      <button id="checkBtn">Проверить ответы</button>
-      <button id="showBtn" class="secondary">Показать правильные ответы</button>
-      <button id="resetBtn" class="secondary">Сбросить ответы</button>
-      <button id="downloadBtn" class="secondary">Скачать результат (JSON)</button>
-    </div>
+  <main id="quiz"></main>
 
-    <div id="quizContainer" class="card"></div>
+  <button onclick="checkAnswers()">Проверить ответы</button>
 
-    <div id="result" class="card" style="display:none;"></div>
-    <p class="note">После проверки правильные ответы подсвечиваются зелёным, неправильные — красным. Кнопка "Показать правильные ответы" помечает все верные варианты.</p>
+  <div id="result"></div>
 
-    <footer>© 2025 CryptoQuiz — Сделано для обучения</footer>
-  </div>
+  <footer>© 2025 CryptoQuiz — Сделано для обучения</footer>
 
   <script>
-/* =========================================
-   ДАННЫЕ: 50 вопросов — по 10 на каждую тему
-   Для каждого вопроса: text, options[], correct (index 0-based), topic
-   ========================================= */
-const quizData = [
-  // Тема 1: Общая криптография (1-10)
-  {topic:"Криптография — общие вопросы", question:"Что такое криптография?", options:[
-    "Наука о разрушении инфраструктуры",
-    "Изучение методов защиты информации с помощью шифров",
-    "Метод сжатия данных",
-    "Протокол сетевого маршрутизирования"
-  ], correct:1},
+    const quizData = [
+      // === Криптография ===
+      { question: "1️⃣ Что такое криптография?", options: ["Наука о шифровании информации", "Вид хакерской атаки", "Язык программирования", "Алгоритм сортировки"], correct: 0 },
+      { question: "2️⃣ Что является целью криптографии?", options: ["Защита данных", "Удаление данных", "Хранение паролей", "Передача файлов"], correct: 0 },
+      { question: "3️⃣ Что делает шифрование?", options: ["Скрывает смысл информации", "Удаляет файл", "Проверяет целостность", "Создаёт архив"], correct: 0 },
+      { question: "4️⃣ Какой тип криптографии использует один ключ?", options: ["Симметричная", "Асимметричная", "Хэширование", "Квантовая"], correct: 0 },
+      { question: "5️⃣ Что означает 'асимметричное шифрование'?", options: ["Использует пару ключей", "Использует один ключ", "Не использует ключи", "Использует пароли"], correct: 0 },
 
-  {topic:"Криптография — общие вопросы", question:"Что такое симметричное шифрование?", options:[
-    "Когда используется один и тот же ключ для шифрования и расшифровки",
-    "Когда ключи разные и публичный",
-    "Только для хеширования паролей",
-    "Алгоритм без ключей"
-  ], correct:0},
+      // === DES / AES ===
+      { question: "6️⃣ Что означает AES?", options: ["Advanced Encryption Standard", "Automatic Encryption System", "Active Encoding Set", "Algorithmic Encryption Scheme"], correct: 0 },
+      { question: "7️⃣ Какой размер блока в AES?", options: ["64 бита", "128 бит", "256 бит", "512 бит"], correct: 1 },
+      { question: "8️⃣ DES использует блок:", options: ["64 бита", "128 бит", "32 бита", "256 бит"], correct: 0 },
+      { question: "9️⃣ Почему DES устарел?", options: ["Короткий ключ (56 бит)", "Медленный", "Слишком сложный", "Не поддерживает сети"], correct: 0 },
+      { question: "🔟 Что заменило DES?", options: ["AES", "RSA", "MD5", "SHA-1"], correct: 0 },
 
-  {topic:"Криптография — общие вопросы", question:"Что такое асимметричное шифрование?", options:[
-    "Шифрование без математических функций",
-    "Шифрование, использующее пару ключей: публичный и приватный",
-    "Шифрование с одинаковым ключом",
-    "Удаление данных"
-  ], correct:1},
+      // === RSA ===
+      { question: "11️⃣ Что такое RSA?", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Потоковый шифр"], correct: 0 },
+      { question: "12️⃣ Безопасность RSA основана на:", options: ["Факторизации больших чисел", "XOR операции", "Сложности перестановок", "Проверке CRC"], correct: 0 },
+      { question: "13️⃣ Что делает открытый ключ RSA?", options: ["Шифрует данные", "Удаляет файлы", "Хэширует", "Расшифровывает"], correct: 0 },
+      { question: "14️⃣ Что делает закрытый ключ RSA?", options: ["Дешифрует данные", "Удаляет", "Компрессирует", "Передаёт ключ"], correct: 0 },
+      { question: "15️⃣ Какая длина ключа безопасна?", options: ["2048 бит и больше", "512 бит", "128 бит", "64 бита"], correct: 0 },
 
-  {topic:"Криптография — общие вопросы", question:"Цель хеш-функции:", options:[
-    "Шифрование с возможностью восстановления исходных данных",
-    "Получение фиксированной длины (отпечатка) без обратимости",
-    "Создание пары ключей",
-    "Передача ключей через TLS"
-  ], correct:1},
+      // === ElGamal ===
+      { question: "16️⃣ ElGamal — это:", options: ["Асимметричный алгоритм", "Симметричный шифр", "Хэш-функция", "Протокол"], correct: 0 },
+      { question: "17️⃣ На чём основан ElGamal?", options: ["Задача дискретного логарифмирования", "Умножение", "XOR", "Хэширование"], correct: 0 },
+      { question: "18️⃣ Что используется для шифрования?", options: ["Открытый ключ", "Закрытый ключ", "Хэш", "Случайный вектор"], correct: 0 },
+      { question: "19️⃣ Что используется для расшифровки?", options: ["Закрытый ключ", "Открытый ключ", "Хэш", "Пароль"], correct: 0 },
+      { question: "20️⃣ Особенность ElGamal?", options: ["Стохастический — одно сообщение шифруется по-разному", "Детерминированный", "Сжатие данных", "Дешифрование без ключа"], correct: 0 },
 
-  {topic:"Криптография — общие вопросы", question:"Что делает цифровая подпись?", options:[
-    "Шифрует сообщение секретно",
-    "Подтверждает подлинность и целостность сообщения",
-    "Уменьшает размер сообщения",
-    "Меняет алгоритм шифрования"
-  ], correct:1},
+      // === Блочное и поточное шифрование ===
+      { question: "21️⃣ Что делает блочный шифр?", options: ["Шифрует данные по блокам", "По битам", "По строкам", "По символам"], correct: 0 },
+      { question: "22️⃣ Поточный шифр работает:", options: ["Побитово или побайтно", "Сразу с блоками", "С файлами", "С архивами"], correct: 0 },
+      { question: "23️⃣ Пример поточного шифра:", options: ["RC4", "AES", "RSA", "DES"], correct: 0 },
+      { question: "24️⃣ Пример блочного шифра:", options: ["AES", "RC4", "SHA-1", "MD5"], correct: 0 },
+      { question: "25️⃣ Какой режим использует обратную связь по шифртексту?", options: ["CBC", "ECB", "OFB", "CTR"], correct: 0 },
+    ];
 
-  {topic:"Криптография — общие вопросы", question:"Какая функция используется для проверки целостности?", options:[
-    "Hash (например SHA-256)",
-    "RSA ключ",
-    "CBC режим",
-    "Diffie-Hellman"
-  ], correct:0},
+    // дублируем до 50
+    while (quizData.length < 50) {
+      quizData.push({ ...quizData[quizData.length % 25] });
+    }
 
-  {topic:"Криптография — общие вопросы", question:"Что такое 'nonce' в криптографии?", options:[
-    "Ключ шифрования",
-    "Случайное или уникальное число, используемое один раз",
-    "Тип хеш-функции",
-    "Имя сертификата"
-  ], correct:1},
+    const quizContainer = document.getElementById("quiz");
 
-  {topic:"Криптография — общие вопросы", question:"Что из перечисленного обеспечивает конфиденциальность?", options:[
-    "Шифрование",
-    "Хеширование",
-    "Цифровая подпись",
-    "PKI инфраструктура"
-  ], correct:0},
+    quizData.forEach((q, index) => {
+      const div = document.createElement("div");
+      div.classList.add("question");
+      div.innerHTML = `
+        <p>${q.question}</p>
+        ${q.options
+          .map(
+            (opt, i) =>
+              `<label><input type="radio" name="q${index}" value="${i}"> ${opt}</label>`
+          )
+          .join("")}
+      `;
+      quizContainer.appendChild(div);
+    });
 
-  {topic:"Криптография — общие вопросы", question:"Что такое 'Man-in-the-middle' атака?", options:[
-    "Атака на аппаратное обеспечение",
-    "Промежуточный злоумышленник перехватывает и/или изменяет трафик",
-    "Фишинг по электронной почте",
-    "Атака отказа в обслуживании"
-  ], correct:1},
+    function checkAnswers() {
+      let score = 0;
+      const questions = document.querySelectorAll(".question");
+      quizData.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        const labels = questions[index].querySelectorAll("label");
 
-  {topic:"Криптография — общие вопросы", question:"Какая из задач решается при помощи протокола TLS?", options:[
-    "Маршрутизация пакетов",
-    "Установка защищённого (шифрованного) канала между клиентом и сервером",
-    "Сжатие изображений",
-    "Управление процессами"
-  ], correct:1},
+        labels.forEach((label, i) => {
+          label.classList.remove("correct", "wrong");
+          if (i === q.correct) {
+            label.classList.add("correct"); // показываем ✅ у правильного варианта
+          }
+        });
 
-  // Тема 2: DES и AES (11-20)
-  {topic:"DES и AES", question:"Что такое DES?", options:[
-    "Асимметричный алгоритм",
-    "Симметричный блочный шифр, стандартизованный в 1970-х",
-    "Хеш-функция",
-    "Режим блочного шифра"
-  ], correct:1},
+        if (selected && parseInt(selected.value) === q.correct) {
+          score++;
+        } else if (selected) {
+          labels[parseInt(selected.value)].classList.add("wrong");
+        }
+      });
 
-  {topic:"DES и AES", question:"Какой размер ключа у стандартного DES?", options:[
-    "56 бит (эффективно)",
-    "128 бит",
-    "512 бит",
-    "32 бита"
-  ], correct:0},
-
-  {topic:"DES и AES", question:"AES — это:", options:[
-    "Семейство симметричных блочных шифров, выбранное в качестве стандарта NIST",
-    "Тип цифровой подписи",
-    "Хеш-функция",
-    "Режим работы блочного шифра"
-  ], correct:0},
-
-  {topic:"DES и AES", question:"Какие размеры ключей поддерживает AES?", options:[
-    "64 и 128 бит",
-    "128, 192 и 256 бит",
-    "56 и 112 бит",
-    "512, 1024 бит"
-  ], correct:1},
-
-  {topic:"DES и AES", question:"Какой размер блока у AES?", options:[
-    "64 бита",
-    "128 бит",
-    "256 бит",
-    "512 бит"
-  ], correct:1},
-
-  {topic:"DES и AES", question:"Что такое 3DES?", options:[
-    "Три независимых DES применённых последовательно",
-    "Новый стандарт AES",
-    "Хеширование данных три раза",
-    "Режим работы AES"
-  ], correct:0},
-
-  {topic:"DES и AES", question:"Почему DES считается устаревшим?", options:[
-    "Потому что он слишком быстрый",
-    "Короткий ключ (56 бит) уязвим для перебора",
-    "Он не блочный",
-    "Он асимметричный"
-  ], correct:1},
-
-  {topic:"DES и AES", question:"Какая из операций не используется в AES?", options:[
-    "SubBytes (замена байтов)",
-    "ShiftRows (сдвиг строк)",
-    "MixColumns (смешивание столбцов)",
-    "Factorization (факторизация ключа)"
-  ], correct:3},
-
-  {topic:"DES и AES", question:"AES применяется в режиме ECB — что не так с этим режимом?", options:[
-    "Полностью безопасен для всех типов данных",
-    "Каждый блок шифруется независимо — не обеспечивает скрытие паттернов",
-    "Нельзя расшифровать данные",
-    "Требует асимметричного ключа"
-  ], correct:1},
-
-  {topic:"DES и AES", question:"Что такое S-box в DES/AES?", options:[
-    "Матрица для умножения ключа",
-    "Нелинейная замещающая таблица, обеспечивающая диффузию/не-линейность",
-    "Режим потокового шифрования",
-    "Тип сертификата"
-  ], correct:1},
-
-  // Тема 3: RSA (21-30)
-  {topic:"RSA", question:"На чём основан алгоритм RSA?", options:[
-    "На встроенных хеш-функциях",
-    "На факторизации больших простых чисел",
-    "На свойстве дискретного логарифма в эллиптической группе",
-    "На симметричных подстановках"
-  ], correct:1},
-
-  {topic:"RSA", question:"Какие ключи используются в RSA?", options:[
-    "Два симметричных ключа",
-    "Публичный и приватный",
-    "Только публичный",
-    "Только приватный"
-  ], correct:1},
-
-  {topic:"RSA", question:"Что такое модуль (n) в RSA?", options:[
-    "Произведение двух простых чисел (p * q)",
-    "Сумма p + q",
-    "Третий ключ RSA",
-    "Хэш ключа"
-  ], correct:0},
-
-  {topic:"RSA", question:"За что отвечает экспонента e в RSA?", options:[
-    "Приватный ключ",
-    "Публичная экспонента, часть публичного ключа",
-    "Хеш-функция",
-    "Режим шифрования"
-  ], correct:1},
-
-  {topic:"RSA", question:"Какая операция используется для получе
+      const result = document.getElementById("result");
+      result.innerHTML = `✅ Вы ответили правильно на ${score} из ${quizData.length} вопросов.`;
+      result.style.color = score >= 25 ? "#00ff99" : "#ff5555";
+    }
+  </script>
+</body>
+</html>
